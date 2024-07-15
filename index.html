@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<script type="module">
+			import {episodes} from "./episodes.js"
+			var episodes_list = document.getElementById("episodes")
+			episodes.forEach(function(e) {
+				var option = document.createElement("option");
+				option.value = e;
+				episodes_list.appendChild(option);
+			});
+		</script>
+		<script src="main.js"></script>
+		<div style="float: left">
+			<p>Answered:</p>
+			<ul style="list-style-type: none; padding: 0px; margin: 0px;" id="answered_list">
+			</ul>
+			<div id="game_result_message">
+			</div>
+		</div>
+		<div style="width: 40%; display: block; margin-left: auto; margin-right: auto;">
+				<img
+						style="width: 550; height: 310;"
+						src="images/placeholder.png"
+						onload="this.onload = null; this.src = getImagePath();">
+				<div>
+					<button>1</button>
+					<button disabled=true id="btn2">2</button> <button disabled=true id="btn3">3</button>
+					<button disabled=true id="btn4">4</button> <button disabled=true id="btn5">5</button>
+				</div>
+				<div style="width: 80%; margin-right: 10px; display: inline-block;">
+					<input style="width: 100%" id="episode_selection" type="text" value="" list="episodes" />
+				</div>
+				<div style="display: inline-block">
+					<button id="episode_selection_submit_button" style="display: inline-block" onclick="answerEntered()"> Submit </button>
+					<datalist id="episodes"></datalist>
+				</div>
+		</div>
+	</body>
+</html>

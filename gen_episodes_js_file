@@ -1,0 +1,10 @@
+#!/bin/sh
+
+EPISODES_LIST=$(curl "https://api.tvmaze.com/shows/2260?embed=episodes" | jq '._embedded.episodes[] | "S\(.season)E\(.number) \(.name)"')
+echo -n "export const episodes = ["
+IFS=$'\n'
+for EPISODE in $EPISODES_LIST
+do
+	echo -n "${EPISODE},"
+done
+echo -n "];"
