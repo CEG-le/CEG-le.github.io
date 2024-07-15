@@ -10,31 +10,42 @@
 				episodes_list.appendChild(option);
 			});
 		</script>
-		<script src="main.js"></script>
-		<div style="float: left">
-			<p>Answered:</p>
-			<ul style="list-style-type: none; padding: 0px; margin: 0px;" id="answered_list">
-			</ul>
-			<div id="game_result_message">
+		<script src="main.js" defer></script>
+		<div>
+			<img style="width: 400px; height: 300px; display: block; margin: 10px auto 20px;" id="main_image">
+			<div id="buttons_div"></div>
+			<script>
+				const buttons_div = document.getElementById("buttons_div");
+				var buttons = [];
+				for (var i = 0; i < 5; i++) {
+					const real_num = i + 1;
+					buttons[i] = document.createElement("button");
+					buttons[i].id = "button_" + real_num;
+					buttons[i].innerHTML = real_num.toString();
+					buttons[i].addEventListener("click", function(e) {
+						changeHintNumber(real_num);
+					});
+				}
+				for (var i = 1; i < 5; i++) {
+					buttons[i].disabled = true;
+				}
+				buttons.forEach(function(b) {
+					buttons_div.appendChild(b);
+				});
+			</script>
+			<div style="width: 80%; margin-right: 10px; display: inline-block;">
+				<input style="width: 100%" id="episode_selection" type="text" value="" list="episodes" />
 			</div>
-		</div>
-		<div style="width: 40%; display: block; margin-left: auto; margin-right: auto;">
-				<img
-						style="width: 550; height: 310;"
-						src="images/placeholder.png"
-						onload="this.onload = null; this.src = getImagePath();">
-				<div>
-					<button>1</button>
-					<button disabled=true id="btn2">2</button> <button disabled=true id="btn3">3</button>
-					<button disabled=true id="btn4">4</button> <button disabled=true id="btn5">5</button>
-				</div>
-				<div style="width: 80%; margin-right: 10px; display: inline-block;">
-					<input style="width: 100%" id="episode_selection" type="text" value="" list="episodes" />
-				</div>
-				<div style="display: inline-block">
-					<button id="episode_selection_submit_button" style="display: inline-block" onclick="answerEntered()"> Submit </button>
-					<datalist id="episodes"></datalist>
-				</div>
+			<div style="display: inline-block">
+				<button id="episode_selection_submit_button" style="display: inline-block" onclick="answerEntered()"> Submit </button>
+				<datalist id="episodes"></datalist>
+			</div>
+			<div>
+				<p>Answered:</p>
+				<ul style="list-style-type: none; padding: 0px; margin: 0px;" id="answered_list">
+				</ul>
+				<div id="game_result_message"></div>
+			</div>
 		</div>
 	</body>
 </html>

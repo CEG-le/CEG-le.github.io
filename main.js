@@ -1,10 +1,20 @@
-var hintnumber = 1;
+var hintnumber = undefined;
 var year = "2024";
 var month = "07";
 var day = "15";
 
+
+window.onload = function() { changeHintNumber(1); };
+
 function getImagePath() {
 	return `images/${year}/${month}/${day}/${hintnumber}.png`
+}
+
+function changeHintNumber(number) {
+	if (number > 5 || number < 1) throw new Error("invalid hint number: " + number);
+	hintnumber = number;
+	const image = document.getElementById("main_image");
+	image.src = getImagePath();
 }
 
 function answerEntered() {
@@ -29,17 +39,19 @@ function answerEntered() {
 
 	if (is_correct) {
 		win();
+		return;
 	}
 
-	hintnumber += 1;
+	if (hintnumber == 5) {
+		lose();
+		return;
+	}
 
-	if (hintnumber == 6) lose();
+	changeHintNumber(hintnumber + 1);
 
-	const button = document.getElementById("btn"+hintnumber);
+
+	const button = document.getElementById("button_"+hintnumber);
 	button.disabled = false;
-
-
-
 }
 
 function containsChildWithValue(children, value) {
@@ -74,12 +86,18 @@ function formatHintNumber() {
 }
 
 function end() {
-	console.log("welp");
 	const episode_selection = document.getElementById("episode_selection");
 	const episode_selection_button = document.getElementById("episode_selection_submit_button");
 
-	episode_selection.disable = true;
-	episode_selection_submit_button.disable = true;
+	episode_selection.disabled = true;
+	episode_selection_submit_button.disabled = true;
+
+	for (var i = 1; i <= 5; i++) {
+		const button = document.getElementById("button_" + i);
+		button.disabled = false;
+	}
+
+	changeHintNumber(5);
 }
 
 function win() {
